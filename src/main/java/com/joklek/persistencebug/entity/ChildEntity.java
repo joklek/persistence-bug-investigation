@@ -25,11 +25,6 @@ public class ChildEntity {
     public ChildEntity() {
     }
 
-    public ChildEntity(ParentEntity parent) {
-        this.parent = parent;
-        parent.getChildren().add(this);
-    }
-
     public UUID getId() {
         return this.id;
     }
