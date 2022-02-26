@@ -10,10 +10,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD,
-        scripts = {
-                "classpath:db/migration/h2/clear_schema.sql",
-                "classpath:db/migration/h2/V1__schema.sql"})
 class HibernateBugTest {
 
     @Autowired
