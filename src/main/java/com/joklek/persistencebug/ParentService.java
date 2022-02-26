@@ -33,14 +33,7 @@ public class ParentService {
 
     private void addChildren(ParentEntity parent, int childCount) {
         for (var i = 0; i < childCount; i++) {
-            createChild(parent);
+            parent.addChildren(new ChildEntity());
         }
-    }
-
-    private ChildEntity createChild(ParentEntity parent) {
-        var child = new ChildEntity();
-        child.setParent(parent);
-        parent.addChildren(child);
-        return child;
     }
 }
