@@ -23,6 +23,7 @@ class HibernateBugTest {
         var responseAfter = this.service.getParent(parentId);
 
         assertThat(response.getId()).isEqualTo(parentId);
-        assertThat(responseAfter.getChildren()).hasSameSizeAs(response.getChildren());
+        assertThat(responseAfter.getChildren())
+                .hasSameSizeAs(response.getChildren());
     }
 }

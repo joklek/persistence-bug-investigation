@@ -4,21 +4,27 @@ import com.joklek.persistencebug.entity.ChildEntity;
 import com.joklek.persistencebug.entity.ParentEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
 @Service
 public class ParentService {
 
-    private final ParentRepository parentRepo;
+    private final EntityManager em;
 
-    public ParentService(ParentRepository parentRepo) {
-        this.parentRepo = parentRepo;
+    public ParentService(EntityManager em) {
+        this.em = em;
     }
 
     public ParentEntity getParent(UUID parentId) {
-        return this.parentRepo.findById(parentId)
-                .orElseThrow();
+        return em.createQuery(
+                        "SELECT p " +
+                                "from ParentEntity p " +
+                                "JOIN FETCH p.children " +
+                                "WHERE p.id = :parentId", ParentEntity.class)
+                .setParameter("parentId", parentId)
+                .getSingleResult();
     }
 
     @Transactional
@@ -28,7 +34,8 @@ public class ParentService {
         parent.getChildren().clear();
         addChildren(parent, 2);
 
-        return this.parentRepo.save(parent);
+        em.persist(parent);
+        return parent;
     }
 
     private void addChildren(ParentEntity parent, int childCount) {
