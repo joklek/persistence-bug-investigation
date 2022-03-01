@@ -18,12 +18,9 @@ public class ChildEntity {
     @GeneratedValue
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "parent_id")
     private ParentEntity parent;
-
-    public ChildEntity() {
-    }
 
     public UUID getId() {
         return this.id;
